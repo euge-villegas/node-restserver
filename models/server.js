@@ -5,7 +5,7 @@ import { router } from '../routes/user.js';
 class Server {
     constructor() {
         this.app = express();
-        this.port = process.env.PORT;
+        this.port = process.env.PORT || 3000;
         this.userPath = '/api/user';
 
         //Middlewares - funciones que van a añadir otra funcionalidad a la web server
