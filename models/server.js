@@ -1,12 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import { router } from '../routes/user.js';
+import { dbConnection } from '../database/config.js';
 
 class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT || 3000;
-        this.userPath = '/api/user';
+        this.userPath = '/api/users';
+
+        //Connect to DB
+        this.connectDB();
 
         //Middlewares - funciones que van a añadir otra funcionalidad a la web server
         this.middlewares();
@@ -14,6 +18,12 @@ class Server {
         this.routes();
 
     }
+
+    //Connect to database
+    async connectDB() {
+        await dbConnection();
+    }
+
 
     middlewares() {
         //CORS
