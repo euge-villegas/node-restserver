@@ -4,6 +4,8 @@ import { check } from "express-validator";
 
 import { validateCamps } from "../middlewares/campsValidations.js";
 import {isRoleValid, isMailValid, isValidUserId} from "../helpers/db-validators.js";
+import { validateJWT } from "../middlewares/validate-JWT.js";
+import { isAdminRole, hasRole } from "../middlewares/validate-role.js";
 
 
 export const router = Router();
@@ -27,6 +29,9 @@ router.post('/', [
 ] , userPost);
 
 router.delete('/:id', [
+    validateJWT,
+    // isAdminRole,
+    hasRole('ADMIN_ROLE'),
     check('id', 'Its not a valid ID').isMongoId(),
     check('id').custom(isValidUserId),
     validateCamps
